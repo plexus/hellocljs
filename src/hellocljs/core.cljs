@@ -72,6 +72,9 @@
 ;; We're using (doseq ...) instead of (for ...) because we only care
 ;; about the side effects of the iteration.
 
+(defn rand-color []
+  (rand-nth ["blue" "red" "green" "yellow" "magenta" "cyan" "brown"]))
+
 (defn make-squares
   "Use domina to create a 1000 squares, and add an event handler to
   change the color on mouseover"
@@ -83,6 +86,6 @@
   ;; when the event handler fires, we change the color of the square
   (listen! (sel ".square") :mouseover
            (fn [event]
-             (set-styles! (target event) {:background-color "black"}))))
+             (set-styles! (target event) {:background-color (rand-color)}))))
 
 (make-squares)
