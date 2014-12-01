@@ -1,5 +1,6 @@
 (ns hellocljs.core
-  (:require [domina :refer [append!]]
+  (:require [domina :refer [append! set-styles! log]]
+            [domina.events :refer [listen! target]]
             [domina.css :refer [sel]]))
 
 ;; ============================================================
@@ -47,8 +48,41 @@
 
 ;; (vanilla-dom-create-div)
 
-(defn make-squares []
+;; ============================================================
+;; An example using domina. These are the functions we're using
+
+;; domina.css/sel
+;;   Use a CSS selector to select elements
+
+;; domina/append!
+;;   Append HTML to a DOM element
+
+;; domina/set-styles!
+;;   Set the style of DOM elements
+
+;; domina.events/listen!
+;;   Listen to browser events
+;;   (listen elements event handler)
+
+;; domina.events/target
+;;   Extract the "target", that is, the DOM element that caused
+;;   the event, from an event object
+
+
+;; We're using (doseq ...) instead of (for ...) because we only care
+;; about the side effects of the iteration.
+
+(defn make-squares
+  "Use domina to create a 1000 squares, and add an event handler to
+  change the color on mouseover"
+  []
   (doseq [_ (range 1000)]
-         (append! (sel "body") "<div class='square'></div>")))
+    (append! (sel "body") "<div class='square'></div>"))
+
+  ;; Set up a "mouseover" event handler on each square
+  ;; when the event handler fires, we change the color of the square
+  (listen! (sel ".square") :mouseover
+           (fn [event]
+             (set-styles! (target event) {:background-color "black"}))))
 
 (make-squares)
