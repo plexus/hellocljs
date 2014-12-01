@@ -1,4 +1,6 @@
-(ns hellocljs.core)
+(ns hellocljs.core
+  (:require [domina :refer [append!]]
+            [domina.css :refer [sel]]))
 
 ;; ============================================================
 ;; JavaScript global objects such as window and document are availble
@@ -44,3 +46,9 @@
     (.appendChild (.-body js/document) el)))
 
 ;; (vanilla-dom-create-div)
+
+(defn make-squares []
+  (doseq [_ (range 1000)]
+         (append! (sel "body") "<div class='square'></div>")))
+
+(make-squares)
