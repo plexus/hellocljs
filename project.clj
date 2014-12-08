@@ -10,8 +10,7 @@
 
   :plugins [[lein-cljsbuild "1.0.3"]]
 
-  :cljsbuild {:builds [{
-                        :source-paths ["src"]
+  :cljsbuild {:builds [{:source-paths ["src"]
                         :compiler {
                                    :output-to "resources/app.js"
                                    :optimizations :whitespace
