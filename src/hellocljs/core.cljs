@@ -75,17 +75,18 @@
 (defn rand-color []
   (rand-nth ["blue" "red" "green" "yellow" "magenta" "cyan" "brown"]))
 
+(defn set-random-background-color [event]
+  (set-styles! (target event) {:background-color (rand-color)}))
+
 (defn make-squares
   "Use domina to create a 1000 squares, and add an event handler to
   change the color on mouseover"
   []
-  (doseq [_ (range 1000)]
+  (dotimes [_ 1000]
     (append! (sel "body") "<div class='square'></div>"))
 
   ;; Set up a "mouseover" event handler on each square
   ;; when the event handler fires, we change the color of the square
-  (listen! (sel ".square") :mouseover
-           (fn [event]
-             (set-styles! (target event) {:background-color (rand-color)}))))
+  (listen! (sel ".square") :mouseover set-random-background-color))
 
 (make-squares)
